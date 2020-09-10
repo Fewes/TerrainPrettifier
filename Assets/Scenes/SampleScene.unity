@@ -215,7 +215,7 @@ MonoBehaviour:
   heightmapFoldout: 1
   satelliteFoldout: 1
   previewFoldout: 1
-  satellite: {fileID: 0}
+  satellite: {fileID: 2800000, guid: be5259aeda0a49445a0182c7e7f33c76, type: 3}
   maxSampleCount: 1024
   maxDist: 100000
   minStep: 0
@@ -225,31 +225,31 @@ MonoBehaviour:
   satelliteProcessorEnabled: 1
   denoiser:
     enabled: 1
-    strength: 1
+    strength: 1.5
   ridges:
     enabled: 1
-    strength: 1
-    sharpness: 0.5
+    strength: 7
+    sharpness: 0.75
   erosion:
     enabled: 1
-    strength: 0.1
-    octaves: 4
-    frequency: 0.01
-    slopeMask: 0.1
-    slopeSharpness: 0.5
+    strength: 0.22
+    octaves: 5
+    frequency: 0.182
+    slopeMask: 0
+    slopeSharpness: 0.75
   renderer:
     lighting: 1
     shadows: 1
-    albedo: 1
-    maxSlope: 0.2
+    albedo: 0
+    maxSlope: 0.5
   shadowRemoval:
     enabled: 1
-    shadowColor: {r: 0, g: 0, b: 0, a: 1}
-    passes: 16
-    luminanceThreshold: 0.5
-    saturationThreshold: 0.5
-    edge: 0.1
-    radius: 1
+    shadowColor: {r: 0.08627451, g: 0.13333334, b: 0.16862746, a: 1}
+    passes: 41
+    luminanceThreshold: 0.54
+    saturationThreshold: 0.839
+    edge: 0.05
+    radius: 64
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -278,7 +278,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 1, g: 0.95, b: 0.84, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -371,18 +371,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 920954233}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a93dc30e9d248b74f8401acb1e85adf8, type: 3}
+  m_Script: {fileID: 11500000, guid: 402e03506566e7c46a04cb2092cb6deb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heightmapFoldout: 1
-  satelliteFoldout: 1
+  heightmapFoldout: 0
+  satelliteFoldout: 0
   previewFoldout: 1
   satellite: {fileID: 2800000, guid: 3b3dd71022458d54381a03be7183f6d0, type: 3}
-  maxSampleCount: 1024
-  maxDist: 100000
-  minStep: 0
-  sunAzimuth: 74
-  sunAltitude: 28.2
   heightmapProcessorEnabled: 1
   satelliteProcessorEnabled: 1
   denoiser:
@@ -390,28 +385,36 @@ MonoBehaviour:
     strength: 1.5
   ridges:
     enabled: 1
-    strength: 7
+    strength: 5
     sharpness: 0.75
   erosion:
     enabled: 1
     strength: 0.22
     octaves: 5
-    frequency: 0.182
+    frequency: 0.15
     slopeMask: 0
-    slopeSharpness: 0.75
+    slopeSharpness: 0.22
   renderer:
+    sunAzimuth: 256
+    sunAltitude: 21.9
+    exposure: 1.5
     lighting: 1
     shadows: 1
     albedo: 1
-    maxSlope: 0.5
+    maxSlope: 0.3
+    sampleCount: 1024
   shadowRemoval:
     enabled: 1
-    shadowColor: {r: 0.08627451, g: 0.13333334, b: 0.16862746, a: 1}
-    passes: 41
-    luminanceThreshold: 0.54
-    saturationThreshold: 0.839
-    edge: 0.05
+    shadowColor: {r: 0.050980397, g: 0.08627451, b: 0.13333334, a: 1}
+    passes: 16
+    luminanceThreshold: 0.517
+    saturationThreshold: 1
+    edge: 0.01
     radius: 64
+  cavityGenerator:
+    enabled: 1
+    intensity: 0.75
+    radius: 2
 --- !u!154 &920954235
 TerrainCollider:
   m_ObjectHideFlags: 0
