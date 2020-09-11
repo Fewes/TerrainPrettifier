@@ -109,7 +109,7 @@ public class TerrainPrettifier : MonoBehaviour
 	public ShadowRemoval shadowRemoval = new ShadowRemoval();
 
 	[System.Serializable]
-	public class CavityGenerator
+	public class CavityFilter
 	{
 		public bool		enabled		= true;
 		[Range(0, 2)]
@@ -118,5 +118,5 @@ public class TerrainPrettifier : MonoBehaviour
 		public float	radius		= 1f;
 	}
 
-	public CavityGenerator cavityGenerator = new CavityGenerator();
+	public CavityFilter cavityFilter = new CavityFilter();
 }

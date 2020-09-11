@@ -183,9 +183,7 @@ Shader "TerrainPrettifier/Processor"
 				if (uv.y > 1) uv.y = 2 - uv.y;
 
 				float3 color = tex2D(tex, uv);
-// #ifndef UNITY_COLORSPACE_GAMMA
-// 				color = pow(color, 1.0 / 2.2);
-// #endif
+				
 				return color;
 			}
 
@@ -219,7 +217,7 @@ Shader "TerrainPrettifier/Processor"
 			ENDCG
 		}
 
-		Pass // Cavity generator
+		Pass // Cavity filter
 		{
 			CGPROGRAM
 			#pragma vertex vert

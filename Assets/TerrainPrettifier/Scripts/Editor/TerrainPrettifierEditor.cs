@@ -122,7 +122,7 @@ public class TerrainPrettifierEditor : Editor
 		propErosion,
 		propSatellite,
 		propShadowRemoval,
-		propCavityGenerator,
+		propCavityFilter,
 		propRenderer;
 
 	void CacheProperties ()
@@ -134,7 +134,7 @@ public class TerrainPrettifierEditor : Editor
 		propErosion			= serializedObject.FindProperty("erosion");
 		propSatellite		= serializedObject.FindProperty("satellite");
 		propShadowRemoval	= serializedObject.FindProperty("shadowRemoval");
-		propCavityGenerator	= serializedObject.FindProperty("cavityGenerator");
+		propCavityFilter	= serializedObject.FindProperty("cavityFilter");
 		propRenderer		= serializedObject.FindProperty("renderer");
 	}
 
@@ -228,7 +228,7 @@ public class TerrainPrettifierEditor : Editor
 			EditorGUI.BeginChangeCheck();
 			EditorGUILayout.PropertyField(propSatellite, new GUIContent("Original Texture"));
 			EditorGUILayout.PropertyField(propShadowRemoval);
-			EditorGUILayout.PropertyField(propCavityGenerator);
+			EditorGUILayout.PropertyField(propCavityFilter);
 			if (EditorGUI.EndChangeCheck())
 			{
 				satellitemapNeedsProcessing = true;
@@ -489,11 +489,11 @@ public class TerrainPrettifierEditor : Editor
 				}
 			}
 
-			if (prettifier.cavityGenerator.enabled)
+			if (prettifier.cavityFilter.enabled)
 			{
 				SetMaterialParameters(material, heightmapBuffer.color ? heightmapBuffer.color : terrainData.heightmapTexture);
-				material.SetFloat("_CavityIntensity", prettifier.cavityGenerator.intensity);
-				material.SetFloat("_CavityRadius", prettifier.cavityGenerator.radius);
+				material.SetFloat("_CavityIntensity", prettifier.cavityFilter.intensity);
+				material.SetFloat("_CavityRadius", prettifier.cavityFilter.radius);
 				satellitemapBuffer.Blit(material, SHADER_PASS_CAVITY_GENERATOR);
 			}
 		}

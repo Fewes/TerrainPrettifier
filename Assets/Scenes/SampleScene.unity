@@ -123,133 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &449813917
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 449813920}
-  - component: {fileID: 449813919}
-  - component: {fileID: 449813918}
-  - component: {fileID: 449813921}
-  m_Layer: 0
-  m_Name: Terrain
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
-  m_IsActive: 0
---- !u!154 &449813918
-TerrainCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 449813917}
-  m_Material: {fileID: 0}
-  m_Enabled: 1
-  m_TerrainData: {fileID: 15600000, guid: b79a3558330956d459c51e86e8d55ca0, type: 2}
-  m_EnableTreeColliders: 1
---- !u!218 &449813919
-Terrain:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 449813917}
-  m_Enabled: 1
-  serializedVersion: 6
-  m_TerrainData: {fileID: 15600000, guid: b79a3558330956d459c51e86e8d55ca0, type: 2}
-  m_TreeDistance: 5000
-  m_TreeBillboardDistance: 50
-  m_TreeCrossFadeLength: 5
-  m_TreeMaximumFullLODCount: 50
-  m_DetailObjectDistance: 80
-  m_DetailObjectDensity: 1
-  m_HeightmapPixelError: 5
-  m_SplatMapDistance: 1000
-  m_HeightmapMaximumLOD: 0
-  m_ShadowCastingMode: 2
-  m_DrawHeightmap: 1
-  m_DrawInstanced: 1
-  m_DrawTreesAndFoliage: 1
-  m_ReflectionProbeUsage: 1
-  m_MaterialTemplate: {fileID: 10652, guid: 0000000000000000f000000000000000, type: 0}
-  m_BakeLightProbesForTrees: 1
-  m_PreserveTreePrototypeLayers: 0
-  m_DeringLightProbesForTrees: 1
-  m_ScaleInLightmap: 0.0008454425
-  m_LightmapParameters: {fileID: 15203, guid: 0000000000000000f000000000000000, type: 0}
-  m_GroupingID: 0
-  m_RenderingLayerMask: 1
-  m_AllowAutoConnect: 1
---- !u!4 &449813920
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 449813917}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &449813921
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 449813917}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a93dc30e9d248b74f8401acb1e85adf8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  heightmapFoldout: 1
-  satelliteFoldout: 1
-  previewFoldout: 1
-  satellite: {fileID: 2800000, guid: be5259aeda0a49445a0182c7e7f33c76, type: 3}
-  maxSampleCount: 1024
-  maxDist: 100000
-  minStep: 0
-  sunAzimuth: 74
-  sunAltitude: 28.2
-  heightmapProcessorEnabled: 1
-  satelliteProcessorEnabled: 1
-  denoiser:
-    enabled: 1
-    strength: 1.5
-  ridges:
-    enabled: 1
-    strength: 7
-    sharpness: 0.75
-  erosion:
-    enabled: 1
-    strength: 0.22
-    octaves: 5
-    frequency: 0.182
-    slopeMask: 0
-    slopeSharpness: 0.75
-  renderer:
-    lighting: 1
-    shadows: 1
-    albedo: 0
-    maxSlope: 0.5
-  shadowRemoval:
-    enabled: 1
-    shadowColor: {r: 0.08627451, g: 0.13333334, b: 0.16862746, a: 1}
-    passes: 41
-    luminanceThreshold: 0.54
-    saturationThreshold: 0.839
-    edge: 0.05
-    radius: 64
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -336,13 +209,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 705507993}
-  m_LocalRotation: {x: 0.5756393, y: 0.29521027, z: 0.5614234, w: 0.51603687}
+  m_LocalRotation: {x: 0.5216045, y: 0.36404732, z: 0.5437313, w: 0.54749864}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 15.226, y: 80.276, z: 107.685}
+  m_LocalEulerAnglesHint: {x: 10.094, y: 78.826, z: 97.907}
 --- !u!1 &920954233
 GameObject:
   m_ObjectHideFlags: 0
@@ -356,7 +229,7 @@ GameObject:
   - component: {fileID: 920954235}
   - component: {fileID: 920954234}
   m_Layer: 0
-  m_Name: Terrain 1x0
+  m_Name: Test Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -375,7 +248,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heightmapFoldout: 0
-  satelliteFoldout: 0
+  satelliteFoldout: 1
   previewFoldout: 1
   satellite: {fileID: 2800000, guid: 3b3dd71022458d54381a03be7183f6d0, type: 3}
   heightmapProcessorEnabled: 1
@@ -395,13 +268,13 @@ MonoBehaviour:
     slopeMask: 0
     slopeSharpness: 0.22
   renderer:
-    sunAzimuth: 256
-    sunAltitude: 21.9
-    exposure: 1.5
+    sunAzimuth: 198
+    sunAltitude: 24.4
+    exposure: 1.74
     lighting: 1
     shadows: 1
     albedo: 1
-    maxSlope: 0.3
+    maxSlope: 0.25
     sampleCount: 1024
   shadowRemoval:
     enabled: 1
@@ -411,9 +284,9 @@ MonoBehaviour:
     saturationThreshold: 1
     edge: 0.01
     radius: 64
-  cavityGenerator:
+  cavityFilter:
     enabled: 1
-    intensity: 0.75
+    intensity: 0.5
     radius: 1.5
 --- !u!154 &920954235
 TerrainCollider:
@@ -443,7 +316,7 @@ Terrain:
   m_DetailObjectDistance: 80
   m_DetailObjectDensity: 1
   m_HeightmapPixelError: 5
-  m_SplatMapDistance: 1000
+  m_SplatMapDistance: 20000
   m_HeightmapMaximumLOD: 0
   m_ShadowCastingMode: 2
   m_DrawHeightmap: 1
@@ -471,7 +344,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &963194225
 GameObject:
