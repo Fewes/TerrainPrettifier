@@ -82,6 +82,7 @@ public class TerrainPrettifierEditor : Editor
 	}
 
 	Vector4[] randomDirections;
+	GUIStyle italicStyle;
 
 	void OnEnable ()
 	{
@@ -130,7 +131,7 @@ public class TerrainPrettifierEditor : Editor
 		propHeightmapProcessorEnabled = serializedObject.FindProperty("heightmapProcessorEnabled");
 		propSatelliteProcessorEnabled = serializedObject.FindProperty("satelliteProcessorEnabled");
 		propDenoise			= serializedObject.FindProperty("denoiser");
-		propRidges			= serializedObject.FindProperty("ridges");
+		propRidges			= serializedObject.FindProperty("ridgeMaker");
 		propErosion			= serializedObject.FindProperty("erosion");
 		propSatellite		= serializedObject.FindProperty("satellite");
 		propShadowRemoval	= serializedObject.FindProperty("shadowRemoval");
@@ -144,6 +145,12 @@ public class TerrainPrettifierEditor : Editor
 		{
 			EditorGUILayout.HelpBox("Editing is disabled during Play Mode", MessageType.Info);
 			return;
+		}
+
+		if (italicStyle == null)
+		{
+			italicStyle = new GUIStyle(GUI.skin.label);
+			italicStyle.fontStyle =FontStyle.Italic;
 		}
 
 		//DrawDefaultInspector();
@@ -177,7 +184,7 @@ public class TerrainPrettifierEditor : Editor
 			}
 			*/
 
-			if (GUILayout.Button("Apply To Terrain"))
+			if (GUILayout.Button("Apply to Terrain"))
 			{
 				if (EditorUtility.DisplayDialog("Apply terrain modification?", "Are you sure you wish to apply the prettified result to the terrain object?\n"
 					+ "This is a destructive operation that can only be reversed by restoring the backup.", "Do it!", "Cancel"))
@@ -188,7 +195,7 @@ public class TerrainPrettifierEditor : Editor
 
 			GUILayout.Space(4);
 
-			if (GUILayout.Button("Backup Current"))
+			if (GUILayout.Button("Backup Current (*)"))
 			{
 				if (EditorUtility.DisplayDialog("Backup current data?", "Are you sure you wish to overwrite the backup data with the current data? This is not an undoable operation!", "Do it!", "Cancel"))
 				{
@@ -205,6 +212,8 @@ public class TerrainPrettifierEditor : Editor
 				}
 			}
 			GUI.enabled = true;
+
+			GUILayout.Label("(*) Backup data is created automatically.\nThis button is for updating existing backup data only", italicStyle);
 		}
 		if (heightmapNeedsProcessing)
 		{
@@ -430,7 +439,7 @@ public class TerrainPrettifierEditor : Editor
 			}
 
 			// Ridge maker
-			if (prettifier.ridges.enabled)
+			if (prettifier.ridgeMaker.enabled)
 			{
 				SetMaterialParameters(material, heightmapBuffer.color);
 				heightmapBuffer.Blit(material, SHADER_PASS_RIDGEMAKER);
@@ -599,8 +608,8 @@ public class TerrainPrettifierEditor : Editor
 		material.SetVector("_SunDir", Quaternion.AngleAxis(prettifier.renderer.sunAzimuth, Vector3.up) * Quaternion.AngleAxis(prettifier.renderer.sunAltitude, -Vector3.right) * Vector3.forward);
 		material.SetFloat("_Exposure", prettifier.renderer.exposure);
 
-		material.SetFloat("_RidgeStrength", prettifier.ridges.strength);
-		material.SetFloat("_RidgeSharpness", Mathf.Pow(Mathf.Max(prettifier.ridges.sharpness, 0.001f), 2));
+		material.SetFloat("_RidgeStrength", prettifier.ridgeMaker.strength);
+		material.SetFloat("_RidgeSharpness", Mathf.Pow(Mathf.Max(prettifier.ridgeMaker.sharpness, 0.001f), 2));
 
 		material.SetFloat("_ErosionStrength", Mathf.Pow(prettifier.erosion.strength, 4));
 		material.SetInt("_ErosionOctaves", prettifier.erosion.octaves);

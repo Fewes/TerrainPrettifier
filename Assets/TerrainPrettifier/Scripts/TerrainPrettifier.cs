@@ -45,7 +45,7 @@ public class TerrainPrettifier : MonoBehaviour
 		public float	sharpness	= 0.5f;
 	}
 
-	public RidgeMaker ridges = new RidgeMaker();
+	public RidgeMaker ridgeMaker = new RidgeMaker();
 
 	[System.Serializable]
 	public class Erosion
