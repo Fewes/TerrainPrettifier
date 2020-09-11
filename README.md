@@ -1,5 +1,7 @@
 # Terrain Prettifier
 ![alt text](preview_toggle.gif)
+
+## What is this?
 Terrain Prettifier is a small component designed to clean and improve satellite/DEM based terrains directly inside of Unity. I started working on it because I was frustrated with how cumbersome the process of working with multiple terrain tiles in external programs was, where often I just wanted to add some higher resolution detail to an already existing height map.
 It can also be used to upscale and add detail to low-resolution terrain height maps.
 
