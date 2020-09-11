@@ -356,7 +356,7 @@ GameObject:
   - component: {fileID: 920954235}
   - component: {fileID: 920954234}
   m_Layer: 0
-  m_Name: Terrain
+  m_Name: Terrain 1x0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -389,7 +389,7 @@ MonoBehaviour:
     sharpness: 0.75
   erosion:
     enabled: 1
-    strength: 0.22
+    strength: 1.75
     octaves: 5
     frequency: 0.15
     slopeMask: 0
@@ -414,7 +414,7 @@ MonoBehaviour:
   cavityGenerator:
     enabled: 1
     intensity: 0.75
-    radius: 2
+    radius: 1.5
 --- !u!154 &920954235
 TerrainCollider:
   m_ObjectHideFlags: 0

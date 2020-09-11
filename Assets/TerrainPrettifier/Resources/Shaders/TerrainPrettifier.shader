@@ -153,7 +153,7 @@ Shader "TerrainPrettifier/Processor"
 
 				erosion *= pow(max(0.001, 1-normal.y), _ErosionSlopeMask);
 
-				height += erosion * _ErosionStrength;
+				height += (erosion / _HeightmapScaleOffset.x) * _ErosionStrength;
 
 				return height;
 			}

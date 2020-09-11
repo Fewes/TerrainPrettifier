@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.IO;
+using UnityEngine.SceneManagement;
 
 [CustomEditor(typeof(TerrainPrettifier)), CanEditMultipleObjects]
 public class TerrainPrettifierEditor : Editor
@@ -104,6 +105,7 @@ public class TerrainPrettifierEditor : Editor
 		}
 
 		ProcessHeightmap();
+		ProcessSatelliteMap();
 	}
 
 	void OnDisable ()
@@ -168,17 +170,19 @@ public class TerrainPrettifierEditor : Editor
 				heightmapNeedsProcessing = true;
 			}
 
+			/*
 			if (GUILayout.Button("Process Height Map"))
 			{
 				heightmapNeedsProcessing = true;
 			}
+			*/
 
 			if (GUILayout.Button("Apply To Terrain"))
 			{
 				if (EditorUtility.DisplayDialog("Apply terrain modification?", "Are you sure you wish to apply the prettified result to the terrain object?\n"
 					+ "This is a destructive operation that can only be reversed by restoring the backup.", "Do it!", "Cancel"))
 				{
-					
+					ApplyHeightmap();
 				}
 			}
 
@@ -192,13 +196,15 @@ public class TerrainPrettifierEditor : Editor
 				}
 			}
 
-			if (GUILayout.Button("Restore Backup"))
+			GUI.enabled = !SceneManager.GetActiveScene().isDirty;
+			if (GUILayout.Button(SceneManager.GetActiveScene().isDirty ? "Can't restore backup while scene is dirty" : "Restore Backup"))
 			{
 				if (EditorUtility.DisplayDialog("Restore backup data?", "Are you sure you wish to overwrite the current data with the backup data? This is not an undoable operation!", "Do it!", "Cancel"))
 				{
 					RestoreOriginalData();
 				}
 			}
+			GUI.enabled = true;
 		}
 		if (heightmapNeedsProcessing)
 		{
@@ -220,7 +226,7 @@ public class TerrainPrettifierEditor : Editor
 		if (prettifier.satelliteFoldout)
 		{
 			EditorGUI.BeginChangeCheck();
-			EditorGUILayout.PropertyField(propSatellite);
+			EditorGUILayout.PropertyField(propSatellite, new GUIContent("Original Texture"));
 			EditorGUILayout.PropertyField(propShadowRemoval);
 			EditorGUILayout.PropertyField(propCavityGenerator);
 			if (EditorGUI.EndChangeCheck())
@@ -228,9 +234,16 @@ public class TerrainPrettifierEditor : Editor
 				satellitemapNeedsProcessing = true;
 			}
 
+			/*
 			if (GUILayout.Button("Process Satellite Map"))
 			{
 				satellitemapNeedsProcessing = true;
+			}
+			*/
+
+			if (GUILayout.Button("Save Processed Texture"))
+			{
+				SaveSatellitemap();
 			}
 		}
 		if (satellitemapNeedsProcessing)
@@ -283,6 +296,9 @@ public class TerrainPrettifierEditor : Editor
 
 		File.Copy(terrainDataBackupPath, terrainDataPath, true);
 		AssetDatabase.Refresh();
+
+		ProcessHeightmap();
+		ProcessSatelliteMap();
 	}
 	#endregion
 
@@ -311,7 +327,7 @@ public class TerrainPrettifierEditor : Editor
 		public RenderTexture color  => _color;
 		public RenderTexture buffer => _buffer;
 
-		public void Check (RenderTexture input, RenderTextureFormat format, bool mipmaps = false)
+		public void Check (RenderTexture input, RenderTextureFormat format, bool mipmaps = false, bool sRGB = false)
 		{
 			if (!input)
 				return;
@@ -323,6 +339,7 @@ public class TerrainPrettifierEditor : Editor
 			{
 				var descriptor = input.descriptor;
 				descriptor.colorFormat = format;
+				descriptor.sRGB = sRGB;
 				if (mipmaps)
 				{
 					descriptor.useMipMap = true;
@@ -341,7 +358,7 @@ public class TerrainPrettifierEditor : Editor
 			Check(input, input.format);
 		}
 
-		public void Check (Texture2D input, RenderTextureFormat format, bool mipmaps = false)
+		public void Check (Texture2D input, RenderTextureFormat format, bool mipmaps = false, bool sRGB = false)
 		{
 			if (!input)
 				return;
@@ -353,6 +370,7 @@ public class TerrainPrettifierEditor : Editor
 			{
 				var descriptor = new RenderTextureDescriptor(width, height, format, 0, 0);
 				descriptor.colorFormat = format;
+				descriptor.sRGB = sRGB;
 				if (mipmaps)
 				{
 					descriptor.useMipMap = true;
@@ -430,6 +448,14 @@ public class TerrainPrettifierEditor : Editor
 		SetPreviewMaterialParameters();
 	}
 
+	void ApplyHeightmap ()
+	{
+		RenderTexture.active = heightmapBuffer.color;
+		terrainData.CopyActiveRenderTextureToHeightmap(new RectInt(0, 0, heightmapBuffer.color.width, heightmapBuffer.color.height), Vector2Int.zero, TerrainHeightmapSyncControl.HeightAndLod);
+		RenderTexture.active = null;
+		prettifier.heightmapProcessorEnabled = false;
+	}
+
 	DoubleBuffer satellitemapBuffer = new DoubleBuffer();
 
 	void ProcessSatelliteMap ()
@@ -439,7 +465,7 @@ public class TerrainPrettifierEditor : Editor
 		if (!satellitemap)
 			return;
 
-		satellitemapBuffer.Check(satellitemap, RenderTextureFormat.ARGB32);
+		satellitemapBuffer.Check(satellitemap, RenderTextureFormat.ARGB32, false, true);
 
 		// Initial blit
 		Graphics.Blit(satellitemap, satellitemapBuffer.color);
@@ -471,6 +497,63 @@ public class TerrainPrettifierEditor : Editor
 				satellitemapBuffer.Blit(material, SHADER_PASS_CAVITY_GENERATOR);
 			}
 		}
+	}
+
+	void SaveSatellitemap ()
+	{
+		if (!satellitemapBuffer.color)
+			ProcessSatelliteMap();
+		//if (satellitemapBuffer.color)
+		//	return;
+
+		var original = prettifier.satellite;
+		var output   = satellitemapBuffer.color;
+
+		var originalAsset	= AssetDatabase.GetAssetPath(original);
+		var outputDir		= Path.GetDirectoryName(originalAsset);
+		var outputAsset		= outputDir + "/" + original.name + "_Processed.jpg";
+
+		// Transfer RenderTexture to Texture2D
+		var tex = new Texture2D(output.width, output.height, TextureFormat.RGBA32, false);
+		RenderTexture.active = output;
+		tex.ReadPixels(new Rect(0, 0, output.width, output.height), 0, 0);
+		RenderTexture.active = null;
+
+		// Encode to bytes
+		byte[] bytes;
+		bytes = tex.EncodeToJPG(100);
+		
+		// Save new file
+		File.WriteAllBytes(outputAsset, bytes);
+
+		// Destroy temp texture
+		DestroyImmediate(tex);
+
+		// Make sure the new texture is visible to Unity
+		AssetDatabase.Refresh();
+
+		// Copy some texture import settings from the original to the new asset
+		var originalImporter = AssetImporter.GetAtPath(originalAsset) as TextureImporter;
+		var outputImporter = AssetImporter.GetAtPath(outputAsset) as TextureImporter;
+
+		outputImporter.alphaIsTransparency = originalImporter.alphaIsTransparency;
+		outputImporter.alphaSource = originalImporter.alphaSource;
+		outputImporter.anisoLevel = originalImporter.anisoLevel;
+		outputImporter.filterMode = originalImporter.filterMode;
+		outputImporter.isReadable = originalImporter.isReadable;
+		outputImporter.maxTextureSize = originalImporter.maxTextureSize;
+		outputImporter.mipMapBias = originalImporter.mipMapBias;
+		outputImporter.mipmapEnabled = originalImporter.mipmapEnabled;
+		outputImporter.mipmapFilter = originalImporter.mipmapFilter;
+		outputImporter.sRGBTexture = originalImporter.sRGBTexture;
+		outputImporter.streamingMipmaps = originalImporter.streamingMipmaps;
+		outputImporter.streamingMipmapsPriority = originalImporter.streamingMipmapsPriority;
+		outputImporter.textureCompression = originalImporter.textureCompression;
+		outputImporter.textureType = originalImporter.textureType;
+		outputImporter.wrapMode = originalImporter.wrapMode;
+		outputImporter.wrapModeU = originalImporter.wrapModeU;
+		outputImporter.wrapModeV = originalImporter.wrapModeV;
+		outputImporter.SaveAndReimport();
 	}
 
 	void SetMaterialParameters (Material material, Texture heightmap)

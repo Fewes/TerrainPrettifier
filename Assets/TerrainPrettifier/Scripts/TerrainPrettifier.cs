@@ -51,7 +51,7 @@ public class TerrainPrettifier : MonoBehaviour
 	public class Erosion
 	{
 		public bool		enabled			= true;
-		[Range(0, 1)]
+		[Range(0, 10)]
 		public float	strength		= 0.22f;
 		[Range(1, 12)]
 		public int		octaves			= 5;
