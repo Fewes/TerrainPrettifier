@@ -168,7 +168,6 @@ Shader "TerrainPrettifier/Processor"
 
 			float4 		_RandomDirections[512];
 
-			float3		_ShadowColor;
 			int 		_Pass;
 			float 		_LumThreshold;
 			float 		_SatThreshold;
@@ -183,7 +182,7 @@ Shader "TerrainPrettifier/Processor"
 				if (uv.y > 1) uv.y = 2 - uv.y;
 
 				float3 color = tex2D(tex, uv);
-				
+
 				return color;
 			}
 

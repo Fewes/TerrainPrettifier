@@ -247,19 +247,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 402e03506566e7c46a04cb2092cb6deb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heightmapFoldout: 0
+  heightmapFoldout: 1
   satelliteFoldout: 1
   previewFoldout: 1
   satellite: {fileID: 2800000, guid: 3b3dd71022458d54381a03be7183f6d0, type: 3}
   heightmapProcessorEnabled: 1
   satelliteProcessorEnabled: 1
+  previewEnabled: 1
   denoiser:
     enabled: 1
     strength: 1.5
-  ridges:
+  ridgeMaker:
     enabled: 1
     strength: 5
-    sharpness: 0.75
+    sharpness: 0.5
   erosion:
     enabled: 1
     strength: 1.75
@@ -278,7 +279,6 @@ MonoBehaviour:
     sampleCount: 1024
   shadowRemoval:
     enabled: 1
-    shadowColor: {r: 0.050980397, g: 0.08627451, b: 0.13333334, a: 1}
     passes: 16
     luminanceThreshold: 0.517
     saturationThreshold: 1

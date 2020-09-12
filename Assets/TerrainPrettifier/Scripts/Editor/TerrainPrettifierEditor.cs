@@ -263,7 +263,18 @@ public class TerrainPrettifierEditor : Editor
 
 		EditorGUILayout.Space();
 
-		prettifier.previewFoldout = CustomUI.Foldout("Preview", prettifier.previewFoldout);
+		bool previewEnabled = prettifier.previewEnabled;
+		prettifier.previewFoldout = CustomUI.FoldoutWithToggle("Preview", prettifier.previewFoldout, ref previewEnabled);
+		if (previewEnabled != prettifier.previewEnabled)
+		{
+			Undo.RecordObject(prettifier, "Modified enabled");
+			prettifier.previewEnabled = previewEnabled;
+
+			if (prettifier.previewEnabled)
+				CheckRenderer();
+			else
+				CheckRenderer(true);
+		}
 		if (prettifier.previewFoldout)
 		{
 			EditorGUILayout.PropertyField(propRenderer);
@@ -452,9 +463,6 @@ public class TerrainPrettifierEditor : Editor
 				heightmapBuffer.Blit(material, SHADER_PASS_EROSION);
 			}
 		}
-
-		SetMaterialParameters(previewMaterial, heightmapBuffer.color);
-		SetPreviewMaterialParameters();
 	}
 
 	void ApplyHeightmap ()
@@ -483,7 +491,6 @@ public class TerrainPrettifierEditor : Editor
 		{
 			if (prettifier.shadowRemoval.enabled)
 			{
-				material.SetColor("_ShadowColor", prettifier.shadowRemoval.shadowColor);
 				material.SetVectorArray("_RandomDirections", randomDirections);
 				material.SetFloat("_LumThreshold", prettifier.shadowRemoval.luminanceThreshold);
 				material.SetFloat("_SatThreshold", prettifier.shadowRemoval.saturationThreshold);
@@ -567,11 +574,15 @@ public class TerrainPrettifierEditor : Editor
 
 	void SetMaterialParameters (Material material, Texture heightmap)
 	{
-		CheckRenderer();
-
 		var bounds = terrainBounds;
-		renderer.transform.position   = bounds.center;
-		renderer.transform.localScale = bounds.size;
+
+		if (prettifier.previewEnabled)
+		{
+			CheckRenderer();
+		
+			renderer.transform.position   = bounds.center;
+			renderer.transform.localScale = bounds.size;
+		}
 
 		var heightmapBounds = new Vector4(bounds.min.x, bounds.min.z, 1f / bounds.size.x, 1f / bounds.size.z);
 		//var heightmap = terrainData.heightmapTexture;

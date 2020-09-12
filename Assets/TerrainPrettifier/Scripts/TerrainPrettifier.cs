@@ -25,6 +25,8 @@ public class TerrainPrettifier : MonoBehaviour
 
 	public bool satelliteProcessorEnabled	= true;
 
+	public bool previewEnabled				= true;
+
 	[System.Serializable]
 	public class Denoiser
 	{
@@ -92,8 +94,6 @@ public class TerrainPrettifier : MonoBehaviour
 	public class ShadowRemoval
 	{
 		public bool		enabled				= true;
-		[ColorUsage(false)]
-		public Color	shadowColor			= Color.black;
 		[Range(1, 64)]
 		public int		passes				= 16;
 		[Range(0, 1)]
