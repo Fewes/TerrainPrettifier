@@ -429,6 +429,9 @@ public class TerrainPrettifierEditor : Editor
 
 	void ProcessHeightmap ()
 	{
+		if (!terrainData)
+			return;
+
 		var heightmap = terrainData.heightmapTexture;
 
 		heightmapBuffer.Check(heightmap);
@@ -467,6 +470,9 @@ public class TerrainPrettifierEditor : Editor
 
 	void ApplyHeightmap ()
 	{
+		if (!terrainData || heightmapBuffer == null)
+			return;
+
 		RenderTexture.active = heightmapBuffer.color;
 		terrainData.CopyActiveRenderTextureToHeightmap(new RectInt(0, 0, heightmapBuffer.color.width, heightmapBuffer.color.height), Vector2Int.zero, TerrainHeightmapSyncControl.HeightAndLod);
 		RenderTexture.active = null;
@@ -477,6 +483,9 @@ public class TerrainPrettifierEditor : Editor
 
 	void ProcessSatelliteMap ()
 	{
+		if (!terrainData)
+			return;
+
 		var satellitemap = prettifier.satellite;
 
 		if (!satellitemap)
@@ -519,8 +528,8 @@ public class TerrainPrettifierEditor : Editor
 	{
 		if (!satellitemapBuffer.color)
 			ProcessSatelliteMap();
-		//if (satellitemapBuffer.color)
-		//	return;
+		if (satellitemapBuffer.color)
+			return;
 
 		var original = prettifier.satellite;
 		var output   = satellitemapBuffer.color;
@@ -585,14 +594,6 @@ public class TerrainPrettifierEditor : Editor
 		}
 
 		var heightmapBounds = new Vector4(bounds.min.x, bounds.min.z, 1f / bounds.size.x, 1f / bounds.size.z);
-		//var heightmap = terrainData.heightmapTexture;
-		//previewMaterial.SetTexture("_Heightmap", buffer.color ? buffer.color : heightmap);
-		/*
-		if (buffer.color)
-			previewMaterial.SetTexture("_Heightmap", buffer.color);
-		else
-			previewMaterial.SetTexture("_Heightmap", Texture2D.blackTexture);
-		*/
 
 		material.SetTexture("_Heightmap", heightmap);
 				

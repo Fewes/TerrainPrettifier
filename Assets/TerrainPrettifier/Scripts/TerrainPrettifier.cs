@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Terrain))]
 public class TerrainPrettifier : MonoBehaviour
 {
 	public bool heightmapFoldout = true;
