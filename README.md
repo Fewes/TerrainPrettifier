@@ -32,8 +32,9 @@ Burns cavity (concave/convex) features into the color map. Should be used with c
 
 # Usage
 Drop the Assets/TerrainPrettifier directory into your Assets folder to install. To apply to a terrain, add the TerrainPrettifier component.  
-The preview renderer is only active while the terrain is selected. To turn it off, simply uncheck it in the component.  
 Once you are happy with the results, press "Apply to Terrain" and "Save Processed Texture" respectively.  
+The resolution of the output is based on that of the input. As such, if you wish to upscale a low-resolution terrain, you first need to increase the height map resolution on the terrain itself to your desired target resolution.  
+The preview renderer is only active while the terrain is selected. To turn it off, simply uncheck it in the component.  
 It is an editor-only script and can not be used at runtime. The component does nothing if included in a build.  
 
 # Limitations
