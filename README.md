@@ -1,5 +1,6 @@
 # Terrain Prettifier
 ![alt text](preview_toggle.gif)
+![alt text](preview_settings.png)
 
 ## What is this?
 Terrain Prettifier is a small component designed to clean and improve satellite/DEM based terrains directly inside of Unity. I started working on it because I was frustrated with how cumbersome the process of working with multiple terrain tiles in external programs was, where often I just wanted to add some higher resolution detail to an already existing height map.
@@ -31,8 +32,9 @@ Burns cavity (concave/convex) features into the color map. Should be used with c
 
 # Usage
 Drop the Assets/TerrainPrettifier directory into your Assets folder to install. To apply to a terrain, add the TerrainPrettifier component.  
+The preview renderer is only active while the terrain is selected. To turn it off, simply uncheck it in the component.  
 Once you are happy with the results, press "Apply to Terrain" and "Save Processed Texture" respectively.  
-It is an editor-only script and can not be used at runtime.
+It is an editor-only script and can not be used at runtime. The component does nothing if included in a build.  
 
 # Limitations
 Does not take neighbouring terrain tiles into account. This is a planned feature but I can't promise it will be added anytime soon.
