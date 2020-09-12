@@ -528,7 +528,7 @@ public class TerrainPrettifierEditor : Editor
 	{
 		if (!satellitemapBuffer.color)
 			ProcessSatelliteMap();
-		if (satellitemapBuffer.color)
+		if (!satellitemapBuffer.color)
 			return;
 
 		var original = prettifier.satellite;

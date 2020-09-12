@@ -48,9 +48,6 @@ float ErosionFBM (float3 worldPos, float3 normal, float a, int o, float f)
 	dir = normal.zx * float2(1, -1);
 
 	float3 h = 0;
-	// float a = 0.7 * (smoothstep(0.3, 0.5, normal.y * 0.5 + 0.5)); //smooth the valleys
-	// float a = 1;// - normal.y;
-	// float f = 0.001;
 	for (int i = 0; i < o; i++)
 	{
 		h += Erosion(worldPos.xz * f, dir + h.zy * float2(1, -1)) * a * float3(1.0, f, f);
