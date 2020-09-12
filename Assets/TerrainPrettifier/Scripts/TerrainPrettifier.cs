@@ -32,7 +32,7 @@ public class TerrainPrettifier : MonoBehaviour
 	{
 		public bool		enabled		= true;
 		[Range(0, 4)]
-		public float	strength	= 2f;
+		public float	strength	= 1.5f;
 	}
 
 	public Denoiser denoiser = new Denoiser();
@@ -44,7 +44,7 @@ public class TerrainPrettifier : MonoBehaviour
 		[Range(0, 100)]
 		public float	strength	= 5f;
 		[Range(0, 1)]
-		public float	sharpness	= 0.5f;
+		public float	sharpness	= 0.75f;
 	}
 
 	public RidgeMaker ridgeMaker = new RidgeMaker();
@@ -54,13 +54,13 @@ public class TerrainPrettifier : MonoBehaviour
 	{
 		public bool		enabled			= true;
 		[Range(0, 10)]
-		public float	strength		= 0.22f;
+		public float	strength		= 1.75f;
 		[Range(1, 12)]
 		public int		octaves			= 5;
 		[Range(0, 1)]
 		public float	frequency		= 0.15f;
 		[Range(0, 1)]
-		public float	slopeMask		= 0.02f;
+		public float	slopeMask		= 0f;
 		[Range(0, 1)]
 		public float	slopeSharpness	= 0.75f;
 	}
@@ -99,11 +99,11 @@ public class TerrainPrettifier : MonoBehaviour
 		[Range(0, 1)]
 		public float	luminanceThreshold	= 0.5f;
 		[Range(0, 1)]
-		public float	saturationThreshold	= 0.5f;
+		public float	saturationThreshold	= 1f;
 		[Range(0, 1)]
-		public float	edge				= 0.1f;
+		public float	edge				= 0.01f;
 		[Range(0, 64)]
-		public float	radius				= 1.0f;
+		public float	radius				= 64f;
 	}
 
 	public ShadowRemoval shadowRemoval = new ShadowRemoval();
@@ -113,9 +113,9 @@ public class TerrainPrettifier : MonoBehaviour
 	{
 		public bool		enabled		= true;
 		[Range(0, 2)]
-		public float	intensity	= 0.25f;
+		public float	intensity	= 0.5f;
 		[Range(1, 16)]
-		public float	radius		= 1f;
+		public float	radius		= 1.5f;
 	}
 
 	public CavityFilter cavityFilter = new CavityFilter();
