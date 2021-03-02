@@ -42,8 +42,8 @@ Does not take neighbouring terrain tiles into account. This is a planned feature
 
 # Acknowledgements & further reading
 Bilateral filter by mrharicot: https://www.shadertoy.com/view/4dfGDH  
-Erosion noise by Clay John: https://www.shadertoy.com/view/MtGcWh
-Gavoronoise by S.Guillitte: https://www.shadertoy.com/view/llsGWl
+Erosion noise by Clay John: https://www.shadertoy.com/view/MtGcWh  
+Gavoronoise by S.Guillitte: https://www.shadertoy.com/view/llsGWl  
 Ray-marching terrain by Inigo Quilez: https://www.iquilezles.org/www/articles/terrainmarching/terrainmarching.htm
 
 # Can I use this code for X/what license applies to the code?
